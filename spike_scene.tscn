@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://drf67o4ykkv53"]
+
+[ext_resource type="Script" uid="uid://eqc145462jvc" path="res://spike.gd" id="1_sk8bx"]
+[ext_resource type="Texture2D" uid="uid://dq23fpc6r4cik" path="res://Flappy/rock.png" id="2_8ym25"]
+[ext_resource type="Texture2D" uid="uid://oojok6kt672o" path="res://Flappy/rockDown.png" id="3_4jkjf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n5h6n"]
+size = Vector2(23, 178)
+
+[node name="SpikeScene" type="StaticBody2D" unique_id=597019640]
+script = ExtResource("1_sk8bx")
+
+[node name="Spikes" type="Node2D" parent="." unique_id=259915518]
+
+[node name="RockDown" type="Sprite2D" parent="Spikes" unique_id=464278261]
+position = Vector2(-0.2000122, 22.399994)
+texture = ExtResource("3_4jkjf")
+
+[node name="Rock" type="Sprite2D" parent="Spikes" unique_id=518183250]
+position = Vector2(0, 421)
+texture = ExtResource("2_8ym25")
+
+[node name="TopCollision" type="CollisionPolygon2D" parent="." unique_id=1163284097]
+position = Vector2(-0.2000122, 25.399994)
+polygon = PackedVector2Array(-42, -122, 9, 116, 16, 116, 44, -122)
+
+[node name="BottomCollision" type="CollisionPolygon2D" parent="." unique_id=1144441044]
+position = Vector2(4, 431)
+polygon = PackedVector2Array(7, -128, 12, -128, 23, -26, 28, -26, 36, 44, 40, 50, 48, 108, -56, 108, -29, 1, -21.862778, -3.6277008)
+
+[node name="ScoreArea" type="Area2D" parent="." unique_id=196612271]
+position = Vector2(11, 224)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea" unique_id=1125353808]
+position = Vector2(1.5, 0)
+shape = SubResource("RectangleShape2D_n5h6n")
+
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

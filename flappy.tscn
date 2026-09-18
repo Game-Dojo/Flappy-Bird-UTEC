@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://2e74y76inv3f"]
+
+[ext_resource type="Script" uid="uid://d6e7fty8d3uc" path="res://game.gd" id="1_o0afa"]
+[ext_resource type="Texture2D" uid="uid://bytfgqn8opnge" path="res://Flappy/background.png" id="1_oi3m7"]
+[ext_resource type="Texture2D" uid="uid://c1kpeg1q35c7f" path="res://Flappy/groundDirt.png" id="2_p0qdp"]
+[ext_resource type="PackedScene" uid="uid://drf67o4ykkv53" path="res://spike_scene.tscn" id="3_5vn6a"]
+[ext_resource type="PackedScene" uid="uid://b6dymscvfvog6" path="res://plane_body.tscn" id="4_o0afa"]
+[ext_resource type="Texture2D" uid="uid://3yoxs1ua10s" path="res://Flappy/UI/textGameOver.png" id="6_2nvdu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5fic"]
+size = Vector2(810, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n5h6n"]
+size = Vector2(815, 39)
+
+[node name="Flappy" type="Node2D" unique_id=420642641]
+script = ExtResource("1_o0afa")
+
+[node name="Level" type="Node2D" parent="." unique_id=1672606387]
+
+[node name="ParallaxBg" type="Parallax2D" parent="Level" unique_id=1413159492]
+repeat_size = Vector2(800, 0)
+autoscroll = Vector2(-50, 0)
+
+[node name="Background" type="Sprite2D" parent="Level/ParallaxBg" unique_id=1197270192]
+position = Vector2(400, 240)
+texture = ExtResource("1_oi3m7")
+
+[node name="ParallaxGround" type="Parallax2D" parent="Level" unique_id=1072018769]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(652, 0)
+repeat_size = Vector2(808, 0)
+autoscroll = Vector2(-50, 0)
+
+[node name="GroundDirt" type="Sprite2D" parent="Level/ParallaxGround" unique_id=425881935]
+position = Vector2(400, 463)
+texture = ExtResource("2_p0qdp")
+
+[node name="GroundDirt2" type="Sprite2D" parent="Level/ParallaxGround" unique_id=1038730118]
+position = Vector2(400, 15)
+texture = ExtResource("2_p0qdp")
+flip_v = true
+
+[node name="ScorePoints" type="RichTextLabel" parent="." unique_id=1422769256]
+clip_contents = false
+offset_top = 1.0
+offset_right = 804.0
+offset_bottom = 478.0
+theme_override_colors/default_color = Color(0, 0, 0, 0.36078432)
+theme_override_font_sizes/normal_font_size = 72
+theme_override_font_sizes/bold_font_size = 72
+theme_override_font_sizes/italics_font_size = 72
+bbcode_enabled = true
+text = "[wave amp=40 freq=2]0[/wave]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Movement" type="Node2D" parent="." unique_id=1518800458]
+
+[node name="SpikeScene" parent="Movement" unique_id=597019640 instance=ExtResource("3_5vn6a")]
+position = Vector2(1408, -30)
+
+[node name="SpikeScene2" parent="Movement" unique_id=1220282930 instance=ExtResource("3_5vn6a")]
+position = Vector2(1672, 87)
+
+[node name="SpikeScene3" parent="Movement" unique_id=2102918132 instance=ExtResource("3_5vn6a")]
+position = Vector2(864, 38)
+
+[node name="SpikeScene4" parent="Movement" unique_id=21602448 instance=ExtResource("3_5vn6a")]
+position = Vector2(1148, 38)
+
+[node name="Plane" parent="." unique_id=1000212698 instance=ExtResource("4_o0afa")]
+position = Vector2(312, 235)
+
+[node name="Ceiling" type="StaticBody2D" parent="." unique_id=155562176]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=1467282633]
+position = Vector2(395, -21)
+shape = SubResource("RectangleShape2D_y5fic")
+
+[node name="DeathArea" type="Area2D" parent="." unique_id=982689192]
+position = Vector2(0, 485)
+
+[node name="ShapeDeath" type="CollisionShape2D" parent="DeathArea" unique_id=486596619]
+position = Vector2(398.5, 38.5)
+shape = SubResource("RectangleShape2D_n5h6n")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=530056368]
+
+[node name="GameOverPanel" type="Panel" parent="CanvasLayer" unique_id=138537416]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverImage" type="TextureRect" parent="CanvasLayer/GameOverPanel" unique_id=910853782]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -39.0
+offset_right = 206.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_2nvdu")
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/GameOverPanel" unique_id=371981467]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = 67.0
+offset_right = 38.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reiniciar"
+
+[connection signal="body_entered" from="DeathArea" to="." method="_on_death_area_body_entered"]
+[connection signal="pressed" from="CanvasLayer/GameOverPanel/RestartButton" to="." method="_on_restart_button_pressed"]

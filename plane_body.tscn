@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://b6dymscvfvog6"]
+
+[ext_resource type="Script" uid="uid://b07645sijmn7w" path="res://plane.gd" id="1_i7kqf"]
+[ext_resource type="Texture2D" uid="uid://c4fc0oh1g6shj" path="res://Flappy/Planes/planeRed1.png" id="2_6345o"]
+[ext_resource type="Texture2D" uid="uid://t26gcwgkj2nu" path="res://Flappy/Planes/planeRed2.png" id="3_cwomk"]
+[ext_resource type="Texture2D" uid="uid://c8f8ttxxc36ly" path="res://Flappy/Planes/planeRed3.png" id="4_3b7oe"]
+[ext_resource type="Texture2D" uid="uid://1scpyquuoek7" path="res://Flappy/puffSmall.png" id="5_j2db4"]
+[ext_resource type="Texture2D" uid="uid://c4dypx3vqxwjx" path="res://Flappy/puffLarge.png" id="6_0e5yp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cwomk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6345o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cwomk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3b7oe")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0l27c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_j2db4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0e5yp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0e5yp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_j2db4")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ilr4"]
+radius = 24.020824
+
+[node name="PlaneBody" type="RigidBody2D" unique_id=1000212698]
+mass = 2.0
+script = ExtResource("1_i7kqf")
+
+[node name="PlaneRedAnimated" type="AnimatedSprite2D" parent="." unique_id=1870190524]
+sprite_frames = SubResource("SpriteFrames_cwomk")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="PuffAnimated" type="AnimatedSprite2D" parent="." unique_id=264382993]
+position = Vector2(-44, 14)
+sprite_frames = SubResource("SpriteFrames_0l27c")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=158325934]
+position = Vector2(2, -1)
+shape = SubResource("CircleShape2D_5ilr4")
+
+[node name="PuffTimer" type="Timer" parent="." unique_id=992356528]
+wait_time = 0.2
