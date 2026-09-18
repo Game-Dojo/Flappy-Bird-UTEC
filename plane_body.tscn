@@ -52,6 +52,7 @@ mass = 2.0
 script = ExtResource("1_i7kqf")
 
 [node name="PlaneRedAnimated" type="AnimatedSprite2D" parent="." unique_id=1870190524]
+modulate = Color(0.5294118, 0.53333336, 1, 1)
 sprite_frames = SubResource("SpriteFrames_cwomk")
 animation = &"Idle"
 autoplay = "Idle"
